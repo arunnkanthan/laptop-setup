@@ -1,0 +1,31 @@
+# add below to .zshrc or .zprofile
+
+# relative path & display git branch 
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+setopt PROMPT_SUBST
+PROMPT='%9c%{%F{green}%}$(parse_git_branch)%{%F{none}%} $ '
+
+
+# Load Git completion
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+fpath=(~/.zsh $fpath)
+
+
+autoload -Uz compinit && compinit
+
+
+# alias'
+alias open-bash="open ~/.bash_profile"
+alias source-bash="source ~/.bash_profile"
+
+
+#git alias'
+alias status="clear; git status"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/libpq/bin:$PATH"
